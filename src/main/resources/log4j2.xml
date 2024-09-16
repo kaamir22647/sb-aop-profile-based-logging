@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <!-- Define Appenders: File appender and Console appender -->
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
+        <!-- Console Appender -->
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
         </Console>
+        <!-- Rolling File Appender for logging to a file with log rotation -->
+        <RollingFile name="RollingFileAppender" fileName="D:/WORKSPACE/LOGS/app.log"
+                     filePattern="D:/WORKSPACE/LOGS/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <!-- Define the log format -->
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- Rotate the file when it exceeds 10MB -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <!-- Rotate the log file daily -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <!-- Keep a maximum of 10 log files -->
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <!-- Optional Console Appender for logging to the console -->
     </Appenders>
+    <!-- Define the loggers -->
     <Loggers>
+        <!-- Application specific logger -->
+        <Logger name="com.aop.logging" level="info" additivity="false">
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="ConsoleAppender"/> <!-- Remove if you don't need console logging -->
+        </Logger>
+
+        <!-- Root logger configuration -->
         <Root level="info">
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="ConsoleAppender"/>
         </Root>
     </Loggers>
 </Configuration>

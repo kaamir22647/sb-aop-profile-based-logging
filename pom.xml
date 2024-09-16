@@ -64,6 +64,11 @@
 			<artifactId>log4j-core</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+			<scope>provided</scope> <!-- or exclude it entirely -->
+		</dependency>
 		<!-- Log4j2 Spring Boot Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
